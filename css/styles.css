@@ -1,5 +1,14 @@
 #babyroom {
     background-color: rgb(113, 241, 243);
     height: 100vh; 
+    text-align: center;
+     
+}
+
+#gamespace {
+    background-image: url(../css/images/Wallpaper1.png); 
+    height: 600px;
+   
+    
      
 }
