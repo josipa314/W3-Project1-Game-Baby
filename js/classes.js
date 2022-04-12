@@ -1,23 +1,48 @@
 /*my game needs:
-A player who has to catch the 4 elements (I will call them Necessities) to satisfy the baby in a short timeframe: milk, diaper, toy, nap time. 
+A player who has to catch the 4 elements (I will call them Necessities) to satisfy the baby in a short timeframe: 
+milk, diaper, toy, nap time. 
 Otherwise baby cries and you loose
 I wanted to have a nanny or mommy run right left to catch all the necessities. 
 Other option maybe more simple for me: have the baby be the player and have to catch the elements he needs
 So either 3 class in total or just 2. 
+My game also needs a Timer/Chronometer
 
 */
 
 class Game {
-    constructor(){
-        this.baby=null;
+    constructor(createHTMLelement) {
+        this.baby = null;
+        this.babyElement = createHTMLelement;
+        this.bottle = null;
+        this.BottleElement = createHTMLelement;
+        this.diaper = null;
+        this.DiaperElement = createHTMLelement;
+        this.toy = null;
+        this.ToyElement = createHTMLelement;
+        this.nap = null;
+        this.NapElement = createHTMLelement;
        }
 
     start() {
+        //needs to create a new baby
         this.baby = new Baby;
+        //needs to put a new baby html element into my html
+        this.createBabyElement=createHTMLelement(div,baby);
+        //needs to create new Necessities
+        //there is 4 of them
+        //and for each the corresponding html element
+        this.bottle = new BabyBottle;
+        this.BottleElement = this.createHTMLelement(div,bottle);
+        this.diaper = new Diaper;
+        this.DiaperElement = this.createHTMLelement(div,diaper);
+        this.toy = new Toy; 
+        this.ToyElement = this.createHTMLelement(div,toy);
+        this.nap = new NapTime;
+        this.NapElement = this.createHTMLelement(div,naptime);
 
     }
 
-    moveBaby(direction){
+    moveBaby(direction) {
         if (direction==="right") {
             this.baby.moveRight();
         }
@@ -56,28 +81,48 @@ class Baby {
 
 class Necessities {
     constructor() {
-        this.positionX=0;
-        this.positionY=0;
+        this.positionY=100;
+        this.positionX=20;
         
+    }
+   
+       moveDown(){
+       this.positionY--;
+   
+       //console.log just to test the code:
+       console.log(`necessity moving down ${this.positionY}`)
+       }
+}
+
+class BabyBottle extends Necessities {
+    constructor() {
+        super();
+        this.positionX=30;
     }
 }
 
-class babyBottle extends Necessities {
-
+class Diaper extends Necessities {
+    constructor() {
+        super();
+        this.positionX=50;
+    }
 }
 
-class diaper extends Necessities {
-    
+class Toy extends Necessities {
+    constructor() {
+        super();
+        this.positionX=70;
+    }
 }
 
-class toy extends Necessities {
-    
-}
 
-class napTime extends Necessities {
-    
+class NapTime extends Necessities {
+    constructor() {
+        super();
+        this.positionX=90;
+    }
 }
-//just to test the code:
+//just to test the code: create an instance of Baby and apply it the method
 //myBaby = new Baby;
 //myBaby.moveRight();
 
