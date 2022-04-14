@@ -1,129 +1,244 @@
+console.log("Welcome to the Baby Survival Tips Game");
 /*my game needs:
 A player who has to catch the 4 elements (I will call them Necessities) to satisfy the baby in a short timeframe: 
-milk, diaper, toy, nap time. 
-Otherwise baby cries and you loose
+milk, diaper, toy, nap time. Otherwise baby cries and you loose
 I wanted to have a nanny or mommy run right left to catch all the necessities. 
-Other option maybe more simple for me: have the baby be the player and have to catch the elements he needs
-So either 3 class in total or just 2. 
-My game also needs a Timer/Chronometer
-
+But took an option more simple for me: have the baby be the player and have to catch the elements he needs
+So just 3 class (and 4 child classes of one)) 
+My game also needs a Timer/Chronometer (done at the last step)
 */
 
-class Game {
-    constructor(createHTMLelement) {
-        this.baby = null;
-        this.babyElement = createHTMLelement;
-        this.bottle = null;
-        this.BottleElement = createHTMLelement;
-        this.diaper = null;
-        this.DiaperElement = createHTMLelement;
-        this.toy = null;
-        this.ToyElement = createHTMLelement;
-        this.nap = null;
-        this.NapElement = createHTMLelement;
-       }
-
-    start() {
-        //needs to create a new baby
-        this.baby = new Baby;
-        //needs to put a new baby html element into my html
-        this.createBabyElement=createHTMLelement(div,baby);
-        //needs to create new Necessities
-        //there is 4 of them
-        //and for each the corresponding html element
-        this.bottle = new BabyBottle;
-        this.BottleElement = this.createHTMLelement(div,bottle);
-        this.diaper = new Diaper;
-        this.DiaperElement = this.createHTMLelement(div,diaper);
-        this.toy = new Toy; 
-        this.ToyElement = this.createHTMLelement(div,toy);
-        this.nap = new NapTime;
-        this.NapElement = this.createHTMLelement(div,naptime);
-
-    }
-
-    moveBaby(direction) {
-        if (direction==="right") {
-            this.baby.moveRight();
-        }
-        else if (direction==="left") {
-            this.baby.moveLeft();
-        }
-    }
-}
-
-
+///////////////////////////////////////////////////////
+//First here I put the classes:
+//////////////////////////////////////////////////////
+//The Baby is the player of my Game
 class Baby {
-//baby has to be able to change positions in order to catch the elements he needs
-    constructor(){
-     this.positionX=0;
+    //baby has to be able to change positions in order to catch the elements he needs
+        constructor(){
+         this.positionX=0;
+         this.positionY=0;
+         this.domElement = null;
+        }
+    
+        moveBabyRight(){
+         this.positionX++;
+         console.log(`baby moving to the right ${this.positionX}`)
+        }
+    
+        moveBabyLeft(){
+        this.positionX--;
+        console.log(`baby moving to the left ${this.positionX}`)
+        }
     }
 
-    moveRight(){
-     this.positionX++;
-     
-     //console.log just to test the code:
-     console.log(`baby moving to the right ${this.positionX}`)
-    }
 
-    moveLeft(){
-    this.positionX--;
-
-    //console.log just to test the code:
-    console.log(`baby moving to the left ${this.positionX}`)
-    }
-}
-
-
-//obstacle was not the right term for my game: my obstacles are elements that the player must catch
-//each has to be able to change positions
-//I need 4 different necessities for each game start: milk bottle, diaper, nap time, toy
-
+//My Baby (the player) must catch 4 different necessities: milk bottle, diaper, nap time, toy
 class Necessities {
     constructor() {
         this.positionY=100;
-        this.positionX=20;
-        
+        this.domElement = null;    
     }
    
        moveDown(){
        this.positionY--;
-   
-       //console.log just to test the code:
-       console.log(`necessity moving down ${this.positionY}`)
+       /* console.log(`necessity moving down ${this.positionY}`) */
        }
 }
 
-class BabyBottle extends Necessities {
+class Bottle extends Necessities {
     constructor() {
         super();
-        this.positionX=30;
+        this.positionX=40;       
     }
 }
 
 class Diaper extends Necessities {
     constructor() {
         super();
-        this.positionX=50;
+        this.positionX=70;
     }
 }
 
 class Toy extends Necessities {
     constructor() {
         super();
-        this.positionX=70;
+        this.positionX=100;
     }
 }
 
-
-class NapTime extends Necessities {
+class Nap extends Necessities {
     constructor() {
         super();
-        this.positionX=90;
+        this.positionX=130;
     }
 }
-//just to test the code: create an instance of Baby and apply it the method
-//myBaby = new Baby;
-//myBaby.moveRight();
+//Here the Game class that contains all the functions/methods
+class Game {
+    constructor() {
+        this.baby = null;
+        this.bottles = [];
+        this.diapers = [];
+        this.toys = [];
+        this.naps = [];
+        this.timer = 0;
+       }
+       
+    createHTMLelement(idName) {
+        let newElem = document.createElement("div");
+        let parentElem = document.getElementById("babyroom");
+        parentElem.appendChild(newElem);
+        newElem.id=idName;
+        return newElem;
+    } 
+
+    drawHTMLelement(element){  
+        element.domElement.style.bottom = element.positionY + "vh";
+        element.domElement.style.left = element.positionX + "vh";
+    }
+
+    detectNecessityOutsideOfScope(element){
+        if(element.positionY < 0){
+            this.removeNecessity(element);
+        }
+    }
+
+    removeNecessity(element){
+        /* this.elements.shift();  */
+        element.domElement.remove(); 
+    }
+
+    detectInterception(necessity){
+        if (this.baby.positionX < necessity.positionX + necessity.width &&
+            this.baby.positionX + this.baby.width > necessity.positionX &&
+            this.baby.positionY < necessity.positionY + necessity.height &&
+            this.baby.height + this.baby.positionY > necessity.positionY) {   
+            
+            this.removeNecessity(necessity); // remove the necessity
+                
+/*                 clearInterval(this.intervaId); // stop/pause game
+
+                setTimeout(() => {
+                    this.runGame(); // continue game
+                }, 3000); */
+        }
+    }
+    
+    start() {
+        //need to create a new baby
+        this.baby = new Baby();
+        console.log(this.baby); //just to check what is containing this.baby
+        //need to create baby html element and put it into my html
+        this.baby.domElement = this.createHTMLelement("baby");
+        //than draw the baby html element
+        this.drawHTMLelement(this.baby);
+        console.log(this.baby.domElement);
+
+        //Now the necessity BOTTLE: creation and moving down
+        setInterval(() => {
+            // create new bottles         
+            if (this.timer % 30 === 0) {
+                let newBottle = new Bottle();
+                console.log(newBottle);
+                newBottle.domElement = this.createHTMLelement("bottle");
+                this.bottles.push(newBottle);
+            }
+            //move bottles down
+            this.bottles.forEach( (bottle) => {   
+                bottle.moveDown();
+                this.drawHTMLelement(bottle);
+                this.detectNecessityOutsideOfScope(bottle);
+                this.detectInterception(bottle);
+            });
+            this.timer++
+        }, 200);
+
+        //Now the necessity DIAPER: creation and moving down
+        setInterval(() => {
+            if (this.timer % 40 === 0) {
+                let newDiaper = new Diaper();
+                console.log(newDiaper);
+                newDiaper.domElement = this.createHTMLelement("diaper");
+                this.diapers.push(newDiaper);
+            }
+            this.diapers.forEach( (diaper) => {
+                diaper.moveDown();  
+                this.drawHTMLelement(diaper);
+                this.detectNecessityOutsideOfScope(diaper);
+            });
+            this.timer++
+        }, 150);
+     
+        //Now the necessity TOY: creation and moving down
+        setInterval(() => {
+            if (this.timer % 60 === 0) {
+                let newToy = new Toy();
+                console.log(newToy);
+                newToy.domElement = this.createHTMLelement("toy");
+                this.toys.push(newToy);
+            }
+            this.toys.forEach( (toy) => {
+                toy.moveDown(); 
+                this.drawHTMLelement(toy);
+                this.detectNecessityOutsideOfScope(toy);
+            });
+            this.timer++
+        }, 200);
+        
+        //Now the necessity NAP: creation and moving down
+        setInterval(() => {
+            if (this.timer % 20 === 0) {
+                let newNap = new Nap();
+                console.log(newNap);
+                newNap.domElement = this.createHTMLelement("nap");
+                this.naps.push(newNap);
+            }
+            this.naps.forEach( (nap) => {
+                nap.moveDown(); 
+                this.drawHTMLelement(nap);
+                this.detectNecessityOutsideOfScope(nap);
+            });
+            this.timer++
+        }, 100);
+
+    }
+    
+
+    moveBaby(direction) {
+        if (direction==="right") {
+            this.baby.moveBabyRight();
+        }
+        else if (direction==="left") {
+            this.baby.moveBabyLeft();
+        }
+        //than we need to make the html elements also move (which means modifying the CSS)
+        //let affect to the element created its positions:
+        this.drawHTMLelement(this.baby);
+    }
+
+}
+
+//Here create the dom interaction when you use your keyboard Right & Left to move the baby
+document.addEventListener("keydown",function(event){
+    //in order to find what is the info displayed when we press a key, we have to console.log the event
+    console.log(event);
+    if (event.key==="ArrowRight") {
+     //need to move the baby right
+     game.moveBaby("right");
+    }
+    else if (event.key==="ArrowLeft") {
+     //need to move the baby left
+     game.moveBaby("left");
+    }
+ 
+ })
+
+///////////////////////////////////////////////////////
+//Here the functions that launch the game:
+//////////////////////////////////////////////////////
+
+//Than I need to start the game: by creating a new instance of it, and applying it the start method
+//meaning the creation of a new baby, and all the necessities
+const game = new Game();
+game.start();
 
 

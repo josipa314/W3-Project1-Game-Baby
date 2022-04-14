@@ -1,25 +1,17 @@
 #babyroom {
     background-image: url(../css/images/Wallpaper1.png); 
     background-color: rgb(113, 241, 243);
-    height: 100vh; 
+    height: 123vh; 
     text-align: center;
-    
-     
-}
-
-#gamespace {
-    height: 10px;
-    width: 90px;
-   /*  position:absolute; */
-    
+    position:relative;
 }
 
 #baby {
     background-image: url(../css/images/Baby.png); 
     background-size: cover;
-    height: 70px;
+    height: 110px;
     width: 90px;
-   /*  position:relative; */
+    position:absolute;
 }
 
 
@@ -27,30 +19,30 @@
     background-image: url(../css/images/babybottle1.png); 
     background-size: cover;
     height: 70px;
-    width: 90px;
-    /* position:relative; */
+    width: 50px;
+    position:absolute;
 }
  
 #diaper {
         background-image: url(../css/images/babydiaper1.png); 
         background-size: cover;
-        height: 70px;
-        width: 90px;
-        /* position:relative; */
+        height: 50px;
+        width: 50px;
+        position:absolute;
 }
 
 #toy {
     background-image: url(../css/images/babytoy1.png); 
     background-size: cover;
-    height: 70px;
-    width: 90px;
-    /* position:relative; */
+    height: 50px;
+    width: 50px;
+    position:absolute;
 }
 
-#naptime {
+#nap {
     background-image: url(../css/images/babynap1.png); 
     background-size: cover;
     height: 70px;
-    width: 120px:
-    /* position:relative; */
+    width: 70px;
+    position:absolute;
 }
