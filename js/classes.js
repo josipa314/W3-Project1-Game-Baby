@@ -172,7 +172,7 @@ start() {
 
     //Now the necessity DIAPER: creation and moving down
     const intervalDiaper= setInterval(() => {
-        if (this.timer % 40 === 0) {
+        if (this.timer % 30 === 0) {
             let newDiaper = new Diaper();
             /*  console.log(newDiaper); */
             newDiaper.domElement = this.createHTMLelement("diaper");
@@ -185,11 +185,11 @@ start() {
             this.detectInterception(diaper);
         });
         this.timer++
-    }, 110);
+    }, 100);
 
     //Now the necessity TOY: creation and moving down
     const intervalToy= setInterval(() => {
-        if (this.timer % 60 === 0) {
+        if (this.timer % 30 === 0) {
             let newToy = new Toy();
             /*  console.log(newToy); */
             newToy.domElement = this.createHTMLelement("toy");
