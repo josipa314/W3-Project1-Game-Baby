@@ -1,7 +1,9 @@
 #babyroom {
     background-image: url(../css/images/Wallpaper1.png); 
+    background-repeat:repeat;
+    object-fit: fill;
     background-color: rgb(113, 241, 243);
-    height: 123vh; 
+    height: 100vh; 
     text-align: center;
     position:relative;
 }
@@ -45,4 +47,15 @@
     height: 70px;
     width: 70px;
     position:absolute;
+}
+
+#win{
+    background-image: url(../css/images/yeswin.jpeg); 
+    background-size: cover;
+    height: 250px;
+    width: 450px;
+    position:absolute;
+    margin-top: 200px;
+    margin-left: 400px;
+    
 }
