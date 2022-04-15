@@ -17,6 +17,8 @@ class Baby {
         constructor(){
          this.positionX=0;
          this.positionY=0;
+         this.width = 20;
+         this.height = 30;
          this.domElement = null;
         }
     
@@ -36,7 +38,9 @@ class Baby {
 class Necessities {
     constructor() {
         this.positionY=100;
-        this.domElement = null;    
+        this.domElement = null;  
+        this.width = 10;
+        this.height = 30;  
     }
    
        moveDown(){
@@ -113,16 +117,14 @@ class Game {
             this.baby.positionY < necessity.positionY + necessity.height &&
             this.baby.height + this.baby.positionY > necessity.positionY) {   
             
-            this.removeNecessity(necessity); // remove the necessity
-                
-/*                 clearInterval(this.intervaId); // stop/pause game
-
-                setTimeout(() => {
-                    this.runGame(); // continue game
-                }, 3000); */
+            this.removeNecessity(necessity); 
         }
     }
     
+    detectWin () {
+
+    }
+
     start() {
         //need to create a new baby
         this.baby = new Baby();
@@ -164,6 +166,7 @@ class Game {
                 diaper.moveDown();  
                 this.drawHTMLelement(diaper);
                 this.detectNecessityOutsideOfScope(diaper);
+                this.detectInterception(diaper);
             });
             this.timer++
         }, 150);
@@ -180,6 +183,7 @@ class Game {
                 toy.moveDown(); 
                 this.drawHTMLelement(toy);
                 this.detectNecessityOutsideOfScope(toy);
+                this.detectInterception(toy);
             });
             this.timer++
         }, 200);
@@ -196,6 +200,7 @@ class Game {
                 nap.moveDown(); 
                 this.drawHTMLelement(nap);
                 this.detectNecessityOutsideOfScope(nap);
+                this.detectInterception(nap);
             });
             this.timer++
         }, 100);
